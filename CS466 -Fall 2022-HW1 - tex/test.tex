@@ -1,0 +1,53 @@
+\begin{tikzpicture}[level 1/.style={sibling distance=15cm},level 2/.style={sibling distance=8cm}]
+	\node {\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   & i*  &prefix(i*) &suffix(i*)\\ \hline
+   (0,0,2,4)  & 1     & 0 &0 \\\hline
+\end{tabular}}[edge from parent fork down]
+		child { node {
+\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   & i*  &prefix(i*) &suffix(i*)\\ \hline
+(0,0,1,2)  & 0     & -1 &1 \\ \hline
+\end{tabular}
+}
+child {node {
+\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   & i*  &prefix(i*) &suffix(i*)\\ \hline
+   (0, 0, 0, 1)  & -     & - &- \\\hline
+\end{tabular}
+}}
+child {node {
+\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   &i*  &prefix(i*) &suffix(i*)\\\hline
+   (0, 1, 1, 2)  & -     & - &- \\\hline
+\end{tabular}
+}}
+}
+child { node {
+\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   & i*  &prefix(i*) &suffix(i*)\\ \hline
+   (1,2,2,4)  & 1     & -1 &1 \\\hline
+\end{tabular}
+}
+child {
+node {
+\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   & i*  &prefix(i*) &suffix(i*)\\ \hline
+   (0, 0, 0, 1)  & -     & - &- \\\hline
+\end{tabular}
+}
+}
+child {
+node {
+\begin{tabular}{|c|c|c|c|}
+\hline
+  {i,j,i',j'}   & i*  &prefix(i*) &suffix(i*)\\ \hline
+   (0, 1, 1, 2)  & -     & - &- \\\hline
+\end{tabular}
+}}}	;
+\end{tikzpicture}

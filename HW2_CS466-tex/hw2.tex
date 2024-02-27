@@ -1,0 +1,266 @@
+\input{cs466.tex}
+
+\oddsidemargin 0in
+\evensidemargin 0in
+\textwidth 6.5in
+\topmargin -0.5in
+\textheight 9.0in
+
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{pdfpages}
+\usepackage{textcomp}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage{tabu}
+\usepackage{changepage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algpseudocode}
+\usepackage{graphicx,url,epstopdf}
+\usepackage{xcolor}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\sloppy
+\usepackage{colortbl}
+
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+
+\begin{document}
+
+\assignment{Name: \hspace{5cm}}{2}{September 21, 2022}{September 29, 2022}
+% Fill in the above, for example, as follows:
+% \solution{Joe Smith}{\today}{1}{Fall 2012}
+
+\pagestyle{myheadings}  % Leave this command alone
+
+\noindent\emph{Instructions:} This homework assignment consists of three questions worth a total of 50 points. 
+In addition, there is a bonus question worth an additional 5 points.
+These questions are based on the material covered in Lectures 6 to 9.
+\textbf{Do not forget to write your name at the top!}
+
+\begin{enumerate}
+
+\item[1.] \textbf{Subquadratic Time Alignment} [10 points]
+\begin{enumerate}
+\item[a.] In class we learned how to solve the block alignment problem in time $O(n^2/\log n)$ using the Four Russians Technique. Specifically, in the case of an alphabet of $|\Sigma| = 4$ letters, we pre-computed \emph{all} pairwise alignments of \emph{all} strings of length $t = \log_2(n)/4$.
+Protein sequences have an alphabet of $|\Sigma| = 20$ letters. 
+How should we choose length $t$ to achieve the time bound of $O(n^2/\log n)$ if $|\Sigma| = 20$?
+Motivate your answer. [5 points]
+\\[.5em]
+\fbox{\parbox{\linewidth}{
+\[ t= \frac{\log_{20} n}{2} =  \frac{\log_2 n}{2 \log_2 20}  \]
+
+\textbf{Reasoning}
+For protein sequences our alphabet set $ |\sum|$ = 20 letters.
+So number of  strings/sequences  of length t that can be generated are 
+\[ 20^t  = 20^{\frac{\log_{20} n}{2}} =\sqrt{n}\]
+
+Now number of  alignments to be precomputed is $20^t * 20^t = \sqrt{n} * \sqrt{n} = n$ \\
+
+Assuming each  alignment takes $O(t^2)$ time, the total time required for precomputation step is $O(nt^2)$ , that is given by 
+\begin{align*}
+    O(nt^2) &=  O\left(n * {\frac{\log_2 n}{2 \log_2 20}}^2 \right) \\
+    &= O(n \log^2 n)  ..... \text{Ignoring  the constant } \frac{1}{4 \log^2 20}
+\end{align*}
+
+Now computing the optimal block alignment requires $\frac{n}{t} * \frac{n}{t}$ lookups and each lookup takes O(log n) time. \\
+So total time for block alignment is 
+\[O\left(\frac{n}{\log n/ 2 \log 20} * \frac{n}{\log n/ 2 \log 20} * \log n\right)
+= O\left( \frac{n^2}{\log n} \right)\]
+
+This running time dominates the time needed to precompute S (which took$ O(n log^2 n)$ time). Hence, we have a total running time of $O(n^2/ log n)$. \\
+
+Hence the t value given above  helps  to achieve the time bound of $O(n^2/\log n)$
+.\vspace{1em}
+}}
+
+\clearpage
+\item[b.] In their STOC 2015 paper, Backurs and Indyk proved that the edit distance problem cannot be solved in time $O(n^{2-\epsilon})$ where $\epsilon > 0$ under the Strong Exponential Time Hypothesis.
+To show that the same result also holds for pairwise global sequence alignment, choose an appropriate scoring function $\delta : (\Sigma \cup \{-\}) \times (\Sigma \cup \{-\}) \rightarrow \mathbb{R}$ such that an optimal edit distance alignment is also an optimal global sequence alignment. [5 points]
+
+\emph{Bonus:} +5 points if you give an actual proof of why the reduction works.
+\\[.5em]
+\fbox{\parbox{\linewidth}{
+
+Let $\sigma$ be the scoring function of the edit distance problem, and $\delta$ be the score matrix of the global alignment problem. \\ \\
+If $\delta(x, y) = \minus \sigma(x, y)$ for all
+$x, y \in \sum \bigcup \{-\}$, then the solution to the edit distance problem is equivalent to the solution to the global alignment problem. \\ 
+Since we know that the , edit distance[Levenshtein distance ] uses +1 for insertion, deletion and mismatch and 0 for match. \\ \\
+To obtain same global alignment, $\delta(x, y)$ =$\{ $-1 for indels, mismatch and 0 for match $\} $. \\
+
+This is obtained by fact that maximising a function is equivalent to minimising the negative of a function. 
+
+\vspace{25em}
+}}
+\end{enumerate}
+\end{enumerate}
+\clearpage
+\begin{enumerate}
+\item[2.] \textbf{Carrillo-Lipman} [20~points]
+
+We consider the \textsc{Weighted SP-Edit Distance} problem, where we are given sequences $\mathbf{v}_1,\ldots,\mathbf{v}_k \in \Sigma^*$ each with length $n$ and a scoring function $\delta : (\Sigma \cup \{-\}) \times (\Sigma \cup \{-\}) \rightarrow \mathbb{R}$. 
+The task is to find a multiple alignment $A$ such that $\mathrm{SP}(A)$ is minimum.
+We use the Carrillo-Lipman algorithm. 
+Let $\mathbf{v}_{i,j}$ denote the prefix $v_{i,1}\ldots v_{i,j}$ of sequence $\mathbf{v}_i$ of length $j$.
+Briefly, $D(i_1,\ldots,i_k)$ denotes the minimum cost of aligning the $k$ prefixes $\mathbf{v}_{1,i_1},\ldots,\mathbf{v}_{k,i_k}$. 
+On the other hand, $D^+_{a,b}(i,j)$ denotes the minimum cost of the pairwise alignment of suffixes $\mathbf{v}_{a,i}$ and $\mathbf{v}_{b,j}$.
+In Lecture 7, we considered the $k=3$ case. 
+We learned that given a heuristic solution with cost $z$, we know that the optimal alignment does \emph{not} pass through vertex $(i_1,i_2,i_3)$ if 
+\begin{equation}
+\label{eq:1}
+  D(i_1,i_2,i_3) + D^+_{1,2}(i_1,i_2) + D^+_{1,3}(i_1,i_3) + D^+_{2,3}(i_2,i_3) > z.
+\end{equation}
+
+\begin{itemize}
+    \item[a.] Consider the case with $k=4$ sequences. Let $(i_1,i_2,i_3,i_4) \in [n]^4$ and let $D(i_1,i_2,i_3,i_4)$ be the optimal cost for aligning prefixes $\mathbf{v}_{1,i_1},\ldots,\mathbf{v}_{4,i_4}$. Let $z$ be the cost of an alignment of $\mathbf{v}_1,\ldots,\mathbf{v}_4$. Under which condition do we know that the optimal alignment does \emph{not} pass through vertex $(i_1,i_2,i_3,i_4)$? [5~points]
+    
+    \emph{Hint:} Update Equation~\eqref{eq:1}.
+    
+\fbox{\parbox{\linewidth}{
+\begin{equation}
+\label{eq:2}
+ \begin{split}
+      D(i_1,i_2,i_3,i_4) + D^+_{1,2}(i_1,i_2) + D^+_{1,3}(i_1,i_3) + D^+_{1,4}(i_1,i_4) \\
+      +D^+_{2,3}(i_2,i_3) + D^+_{2,4}(i_2,i_4) + +D^+_{3,4}(i_3,i_4)  > z.
+ \end{split}
+\end{equation}
+\vspace{2cm}.
+}}
+    
+    \item[b.] Consider the general case with $k \in \mathbb{N}$ sequences. Let $(i_1,\ldots,i_k) \in [n]^k$ and let $D(i_1,\ldots,i_k)$ be the optimal cost for aligning prefixes $\mathbf{v}_{1,i_1},\ldots,\mathbf{v}_{k,i_k}$. Let $z$ be the cost of an alignment of $\mathbf{v}_1,\ldots,\mathbf{v}_k$. Under which condition do we know that the optimal alignment does \emph{not} pass through vertex $(i_1,\ldots,i_k)$? [10~points]
+    
+    \emph{Hint:} Update Equation~\eqref{eq:1}.
+    
+\fbox{\parbox{\linewidth}{
+
+The optimal alignment does not pass through vertex the$ (i_1, i_2 , .. . . , i_k)$ if following holds true
+
+\[ D(i_1,\ldots,i_k) + \sum_{p=1}^k \sum_{q=p+1}^k D^{+}_{p,q} (i_p, i_q) > z\]
+
+
+% \url{https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.50.4051&rep=rep1&type=pdf}
+\vspace{2cm}.
+}}
+
+  \clearpage
+    \item[c.] Finally, consider the \textsc{SP-Global Alignment} problem, where we have the same input $\mathbf{v}_1,\ldots,\mathbf{v}_k \in \Sigma^*$ but aim to find an alignment $A$ with \emph{maximum} score $\mathrm{SP}(A)$. Suppose that we are given $k=3$ sequences. Let $z$ be the score of an alignment of $\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3$. Under which condition do we know that the optimal alignment does \emph{not} pass through vertex $(i_1,i_2,i_3)$? [5~points]
+\vspace{1cm}
+\fbox{\parbox{\linewidth}{
+
+$(i_1,i_2,i_3)$  doesn't pass through the optimal alignment if it satisfies following equation 
+\[  D(i_1,i_2,i_3) + D^+_{1,2}(i_1,i_2) + D^+_{1,3}(i_1,i_3) + D^+_{2,3}(i_2,i_3)  < z\]
+
+Here  $ D(i_1,i_2,i_3)$ is the $\color{red}maximum$ SP-cost of aligning prefixes v1[1..i], v2[1..j], v3[1..k] \\
+
+$D_{p,q}(i, j)$ be the maximum cost of aligning  prefixes vp[1..i], vq[1..j](where  $1\le p < q \le 3$).\\
+
+$D^{+}_{p,q}(i, j)$ be the maximum cost of aligning  suffixes vp[i..n], vq[j..n] (where$ 1\le p < q \le 3$).
+
+
+\vspace{1cm}.
+}}
+\end{itemize}
+
+\clearpage
+\item[3.] \textbf{Star Alignment} [20~points]
+
+Create a star alignment of the four strings $s_1,s_2,s_3,s_4$ using the pre-computed optimal pairwise alignments provided below. Present your answer by identifying the center sequence $s_c$, the quantity $\sum_{i=1}^4 d(s_c,s_i)$ and the final multiple alignment of the strings.
+\textbf{Show your work.} Include all intermediate multiple alignments that you generate.
+
+\begin{tabular}{ll}
+$s_1$ : & \texttt{ACCCTCGCT}\\
+$s_2$ : & \texttt{ACGGTCCCT}\\
+$s_3$ : & \texttt{ACGGCCT}\\
+$s_4$ : & \texttt{TCGGCCCTT}
+\end{tabular}
+
+\begin{tabular}{|rl|rl|rl|}
+\hline
+$s_1$ : & \texttt{ACCCTCGCT} & $s_1$ : & \texttt{ACCCTCGCT} & $s_1$ : & \texttt{AC--CCTCGCT}\\
+$s_2$ : & \texttt{ACGGTCCCT} & $s_3$ : & \texttt{A-CGGC-CT} & $s_4$ : & \texttt{TCGGCC-C-TT}\\
+$d(s_1,s_2)$ = & 3 & $d(s_1,s_3)$ = & 4 & $d(s_1,s_4)$ = & 6\\
+\hline
+$s_2$ : & \texttt{ACGGTCCCT} & $s_2$ : & \texttt{ACGGTCCC-T} & $s_3$ : & \texttt{ACGG-CC-T}\\
+$s_3$ : & \texttt{ACGG--CCT} & $s_4$ : & \texttt{TCGG-CCCTT} & $s_4$ : & \texttt{TCGGCCCTT}\\
+$d(s_2,s_3)$ : & 2 & $d(s_2,s_4)$ = & 3 & $d(s_3,s_4)$ = & 3\\
+\hline
+\end{tabular}
+
+\emph{Hint:} This is an instance of \textsc{SP-Edit Distance}.
+
+\fbox{\parbox{\linewidth}{
+
+Given $d(v_i, v_j )$ is the optimal (weighted) edit distance between $v_i$ and $v_j$, \\
+we know that $d(v_j, v_i )$ = $d(v_i, v_j )$ .\\
+Also $d(v_i, v_i )$ =0 
+
+\begin{enumerate}
+    \item Let $s_1$ be center star.
+    \begin{align*}
+        \sum_{i=1}^4 d(s_1,s_i)& =d(v_1, v_1 ) + d(v_1, v_2 )+ d(v_1, v_3 )+ d(v_1, v_4 ) \\
+    &= 0+3+4+6 \\
+    &= 13
+    \end{align*}
+
+     \item Let $s_2$ be center star.
+    \begin{align*}
+        \sum_{i=1}^4 d(s_2,s_i)& =d(v_2, v_1 ) + d(v_2, v_2 )+ d(v_2, v_3 )+ d(v_2, v_4 ) \\
+    &= 3+0+2+3 \\
+    &= 8
+    \end{align*}
+
+\item Let $s_3$ be center star.
+    \begin{align*}
+        \sum_{i=1}^4 d(s_3,s_i)& =d(v_3, v_1 ) + d(v_3, v_2 )+ d(v_3, v_3 )+ d(v_3, v_4 ) \\
+    &= 4+2+0+3 \\
+    &= 9
+    \end{align*}
+    
+\item Let $s_4$ be center star.
+    \begin{align*}
+        \sum_{i=1}^4 d(s_4,s_i)& =d(v_4, v_1 ) + d(v_4, v_2 )+ d(v_4, v_3 )+ d(v_4, v_4 ) \\
+    &= 6+3+3+0 \\
+    &= 12
+    \end{align*}
+    
+\end{enumerate}
+
+\vspace{1em}.
+}}
+\fbox{\parbox{\linewidth}{
+The minimum sum is obtained when $s_2$ is the center sequence. So we will use $s_c$ = $s_2$\\
+
+Aligning $s_2$ with $s_1$\\ \\
+\begin{tabular}{ll}
+$s_2$ : & \texttt{ACGGTCCCT}\\
+$s_1$ : & \texttt{ACCCTCGCT}\\
+\end{tabular}\\
+
+Aligning $s_3$ with earlier obtained alignment \\ \\
+\begin{tabular}{ll}
+$s_2$ : & \texttt{ACGGTCCCT}\\
+$s_1$ : & \texttt{ACCCTCGCT}\\
+$s_3$ : & \texttt{ACGG-CC-T}
+\end{tabular}\\ \\
+
+
+Aligning $s_4$ to obtain final alignment with earlier obtained alignment.\\ 
+
+\begin{tabular}{ll}
+$s_2$ : & \texttt{ACGGTCCC-T}\\
+$s_1$ : & \texttt{ACCCTCGC-T}\\
+$s_3$ : & \texttt{ACGG--CC-T}\\
+$s_4$ : & \texttt{TCGG-CCCTT}
+\end{tabular}
+\vspace{5cm}.
+}}
+
+
+\end{enumerate}
+
+\end{document}

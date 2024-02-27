@@ -1,0 +1,155 @@
+[2023-02-11 19:01:52] This is codeql database create sample --language=python
+[2023-02-11 19:01:52] Log file was started late.
+[2023-02-11 19:01:52] [PROGRESS] database create> Initializing database at /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample.
+[2023-02-11 19:01:52] Running plumbing command: codeql database init --language=python --source-root=/Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3 --allow-missing-source-root=false --allow-already-existing -- /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample
+[2023-02-11 19:01:52] Calling plumbing command: codeql resolve languages --format=json
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Scanning for [codeql-extractor.yml] from /Users/payalmantri/Desktop/CS 598/codeql/.codeqlmanifest.json
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/go/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/python/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/java/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/html/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/xml/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/properties/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/cpp/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/csv/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/csharp/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/javascript/codeql-extractor.yml.
+[2023-02-11 19:01:52] [DETAILS] resolve languages> Parsing /Users/payalmantri/Desktop/CS 598/codeql/ruby/codeql-extractor.yml.
+[2023-02-11 19:01:52] Plumbing command codeql resolve languages completed:
+                      {
+                        "extractors" : {
+                          "go" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/go"
+                            }
+                          ],
+                          "python" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/python"
+                            }
+                          ],
+                          "java" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/java",
+                              "extractor_options" : {
+                                "exclude" : {
+                                  "title" : "A glob excluding files from analysis.",
+                                  "description" : "A glob indicating what files to exclude from the analysis.\n",
+                                  "type" : "string"
+                                }
+                              }
+                            }
+                          ],
+                          "html" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/html"
+                            }
+                          ],
+                          "xml" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/xml"
+                            }
+                          ],
+                          "properties" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/properties"
+                            }
+                          ],
+                          "cpp" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/cpp"
+                            }
+                          ],
+                          "csv" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/csv"
+                            }
+                          ],
+                          "csharp" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/csharp",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|brotli)$"
+                                    }
+                                  }
+                                },
+                                "buildless" : {
+                                  "title" : "Whether to use buildless (standalone) extraction.",
+                                  "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "cil" : {
+                                  "title" : "Whether to enable CIL extraction.",
+                                  "description" : "A value indicating, whether CIL extraction should be enabled. The default is 'true'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "javascript" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/javascript",
+                              "extractor_options" : { }
+                            }
+                          ],
+                          "ruby" : [
+                            {
+                              "extractor_root" : "/Users/payalmantri/Desktop/CS 598/codeql/ruby"
+                            }
+                          ]
+                        }
+                      }
+[2023-02-11 19:01:53] [PROGRESS] database init> Calculating baseline information in /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3
+[2023-02-11 19:01:53] [SPAMMY] database init> Ignoring the following directories when processing baseline information: .git, .hg, .svn.
+[2023-02-11 19:01:53] [DETAILS] database init> Running command in /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3: /Users/payalmantri/Desktop/CS 598/codeql/tools/osx64/scc --by-file --exclude-dir .git,.hg,.svn --format json .
+[2023-02-11 19:01:53] [PROGRESS] database init> Calculated baseline information for languages:  (28ms).
+[2023-02-11 19:01:53] [PROGRESS] database init> Resolving extractor python.
+[2023-02-11 19:01:53] [DETAILS] database init> Found candidate extractor root for python: /Users/payalmantri/Desktop/CS 598/codeql/python.
+[2023-02-11 19:01:53] [PROGRESS] database init> Successfully loaded extractor Python (python) from /Users/payalmantri/Desktop/CS 598/codeql/python.
+[2023-02-11 19:01:53] [PROGRESS] database init> Created skeleton CodeQL database at /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample. This in-progress database is ready to be populated by an extractor.
+[2023-02-11 19:01:53] Plumbing command codeql database init completed.
+[2023-02-11 19:01:53] [PROGRESS] database create> Running build command: []
+[2023-02-11 19:01:53] Running plumbing command: codeql database trace-command --working-dir=/Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3 --index-traceless-dbs --no-db-cluster -- /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample
+[2023-02-11 19:01:53] Using autobuild script /Users/payalmantri/Desktop/CS 598/codeql/python/tools/autobuild.sh.
+[2023-02-11 19:01:53] [PROGRESS] database trace-command> Running command in /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3: [/Users/payalmantri/Desktop/CS 598/codeql/python/tools/autobuild.sh]
+[2023-02-11 19:01:53] [build-stderr] /bin/sh: python2: command not found
+[2023-02-11 19:01:53] [build-stdout] No directories containing root identifiers were found. Returning working directory as root.
+[2023-02-11 19:01:53] [build-stdout] Will try to guess Python version, as it was not specified in `lgtm.yml`
+[2023-02-11 19:01:53] [build-stdout] Trying to guess Python version based on Trove classifiers in setup.py
+[2023-02-11 19:01:53] [build-stdout] Did not find setup.py (expected it to be at /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/setup.py)
+[2023-02-11 19:01:53] [build-stdout] Trying to guess Python version based on travis file
+[2023-02-11 19:01:53] [build-stdout] Did not find any travis files (expected them at either ['/Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/.travis.yml', '/Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/travis.yml'])
+[2023-02-11 19:01:53] [build-stdout] Trying to guess Python version based on installed versions
+[2023-02-11 19:01:53] [build-stdout] Wanted to run Python 2, but it is not available. Using Python 3 instead
+[2023-02-11 19:01:53] [build-stdout] This script is running Python 3, but Python 2 is also available (as 'python3')
+[2023-02-11 19:01:53] [build-stdout] Could not guess Python version, will use default: Python 3
+[2023-02-11 19:01:53] [build-stdout] Calling python3 /Users/payalmantri/Desktop/CS 598/codeql/python/tools/get_venv_lib.py
+[2023-02-11 19:01:53] [build-stdout] Calling python3 -S /Users/payalmantri/Desktop/CS 598/codeql/python/tools/python_tracer.py -v -z all -c /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample/working/trap_cache -p /Users/payalmantri/opt/miniconda3/lib/python3.9/site-packages -R /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3
+[2023-02-11 19:01:53] [build-stdout] [INFO] Extraction will use the Python 3 standard library.
+[2023-02-11 19:01:53] [build-stdout] [INFO] sys_path is: ['/Users/payalmantri/Desktop/CS 598/codeql/python/tools', '/Users/payalmantri/opt/miniconda3/lib/python39.zip', '/Users/payalmantri/opt/miniconda3/lib/python3.9', '/Users/payalmantri/opt/miniconda3/lib/python3.9/lib-dynload']
+[2023-02-11 19:01:53] [build-stdout] [INFO] Python version 3.9.15
+[2023-02-11 19:01:53] [build-stdout] [INFO] Python extractor version 5.29
+[2023-02-11 19:01:53] [build-stdout] [INFO] Processed 0 modules in 0.43s
+[2023-02-11 19:01:53] Plumbing command codeql database trace-command completed.
+[2023-02-11 19:01:53] [PROGRESS] database create> Finalizing database at /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample.
+[2023-02-11 19:01:53] Running plumbing command: codeql database finalize --mode=normal --no-db-cluster -- /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample
+[2023-02-11 19:01:53] [ERROR] database finalize> No source code was seen and extracted to /Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3/sample.
+                              This can occur if the specified build commands failed to compile or process any code.
+                               - Confirm that there is some source code for the specified language in the project.
+                               - For codebases written in Go, JavaScript, TypeScript, and Python, do not specify 
+                                 an explicit --command.
+                               - For other languages, the --command must specify a "clean" build which compiles 
+                                 all the source code files without reusing existing build artefacts.
+[2023-02-11 19:01:53] Plumbing command codeql database finalize completed with status 32.
+[2023-02-11 19:01:53] Exiting with code 32

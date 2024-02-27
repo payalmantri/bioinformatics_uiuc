@@ -1,0 +1,34 @@
+---
+sourceLocationPrefix: "/Users/payalmantri/Desktop/practice/bioinformatics_uiuc/HW3"
+baselineLinesOfCode: 0
+unicodeNewlines: false
+columnKind: "utf32"
+primaryLanguage: "python"
+inProgress:
+  primaryLanguage: "python"
+  installedExtractors:
+    go:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/go/"
+    python:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/python/"
+    java:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/java/"
+    html:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/html/"
+    xml:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/xml/"
+    properties:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/properties/"
+    cpp:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/cpp/"
+    csv:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/csv/"
+    csharp:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/csharp/"
+    javascript:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/javascript/"
+    ruby:
+    - "file:///Users/payalmantri/Desktop/CS%20598/codeql/ruby/"
+creationMetadata:
+  cliVersion: "2.12.2"
+  creationTime: "2023-02-12T01:01:53.041756Z"
